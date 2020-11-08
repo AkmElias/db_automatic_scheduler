@@ -39,7 +39,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'exam_scheduler',
     # freamework & site packages,
-    'rest_framework'
+    'rest_framework',
+    'import_export'
 
 ]
 
