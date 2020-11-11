@@ -79,13 +79,13 @@ class Course(models.Model):
         verbose_name_plural = "Course"
 
     def __str__(self):
-        return '%s %s' % (self.courseCode, self.crs_shortName)
+        return '%s %s' % (self.courseCode, self.crs_title)
         # return self.crs_shortName
 
 
 class Batch(models.Model):
-    batchName = models.IntegerField(
-        verbose_name='batch', null=False, blank=False)
+    batchName = models.CharField(
+        max_length=20, verbose_name='batch', null=False, blank=False)
     programCode = models.ForeignKey(
         'Program', default='115', on_delete=models.CASCADE, verbose_name='program', db_column="programCode")
 
@@ -105,7 +105,7 @@ class Batch(models.Model):
         unique_together = (("batchName", "programCode"),)
 
     def __str__(self):
-        return '%s %s' % (self.batchName, self.sectionName)
+        return self.batchName
         # return self.sectionName
         # return str(self.batchName)
 
@@ -120,7 +120,7 @@ class Section(models.Model):
         verbose_name_plural = "Section"
 
     def __str__(self):
-        return sectionName
+        return self.sectionName
 
 
 class Faculty(models.Model):
@@ -169,9 +169,9 @@ class Faculty(models.Model):
         verbose_name_plural = "Faculty"
 
     def __str__(self):
-        return self.fac_shortName
-    # def __str__(self):
-    #	return '%s %s' % (self.fac_firstName, self.fac_lastName)
+        # return self.fac_title
+        # def __str__(self):
+        return '%s %s' % (self.fac_firstName, self.fac_lastName)
 
 
 class Exam(models.Model):
@@ -286,8 +286,10 @@ class CourseOffered(models.Model):
     ofr_term = models.CharField(
         max_length=6, choices=TERM_CHOICES, verbose_name='term')
     ofr_year = models.IntegerField(verbose_name='year')
-    courseCode = models.ForeignKey(
-        'Course', default=None, to_field='courseCode', on_delete=models.CASCADE, verbose_name='course', db_column="courseCode")
+    # courseCode = models.ForeignKey(
+    #     'Course', default=None, on_delete=models.CASCADE, verbose_name='course', db_column="courseCode")
+    courseID = models.ForeignKey(
+        'Course', default=None, on_delete=models.CASCADE, blank='true', null='true', verbose_name='course', db_column="courseID")
     batchName = models.ForeignKey(
         'Batch', default=None, on_delete=models.CASCADE, verbose_name='batch', db_column="batchName")
     sectionName = models.ForeignKey('Section', default=None, on_delete=models.CASCADE,
@@ -301,7 +303,7 @@ class CourseOffered(models.Model):
         verbose_name_plural = "CourseOffered"
 
     def __str__(self):
-        return '%s' % (self.courseOfferedID)
+        return '%s' % (self.id)
         # return self.ofr_term
 
 

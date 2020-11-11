@@ -16,6 +16,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from exam_scheduler import views
+from django.views.generic.base import TemplateView
 from django.conf import settings
 from django.conf.urls import url
 from rest_framework import routers, serializers, viewsets
@@ -27,7 +28,9 @@ from rest_framework.authtoken.views import ObtainAuthToken
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('api-auth/', include('rest_framework.urls')),
+    path(r'', include(router.urls)),
+    path('', include('exam_scheduler.urls')),
+    path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
 
     path('admin/password_reset/', auth_views.PasswordResetView.as_view(),
          name='admin_password_reset',),
