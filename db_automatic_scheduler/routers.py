@@ -2,7 +2,7 @@ from rest_framework import routers
 from exam_scheduler import views
 from django.urls import include, path
 from exam_scheduler.viewsets import (UserViewSet, GroupViewSet, DepartmentViewSet, ProgramViewSet,
-                                     CourseViewSet, BatchViewSet, FacultyViewSet, ExamViewSet, RoomViewSet, TimeSlotViewSet,
+                                     CourseViewSet, BatchViewSet, SectionViewSet, FacultyViewSet, ExamViewSet, RoomViewSet, TimeSlotViewSet,
                                      CourseOfferedViewSet, CreateRoutineViewSet, RoutineViewSet)
 
 # from exam_scheduler.views import ProgramAPIView
@@ -17,6 +17,7 @@ router.register(r'programs', ProgramViewSet)
 # router.register(r'program/', ProgramAPIView)
 router.register(r'courses', CourseViewSet)
 router.register(r'batches', BatchViewSet)
+router.register(r'sections', SectionViewSet)
 router.register(r'faculties', FacultyViewSet)
 router.register(r'exams', ExamViewSet)
 router.register(r'rooms', RoomViewSet)

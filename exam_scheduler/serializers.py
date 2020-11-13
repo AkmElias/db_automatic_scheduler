@@ -97,6 +97,12 @@ class BatchSerializer(serializers.ModelSerializer):
 # ('id', 'batchName', 'sectionName', 'bat_term', 'bat_year')
 
 
+class SectionSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Section
+        fields = '__all__'
+
+
 class BatchMiniSerializer(serializers.ModelSerializer):
     class Meta:
         model = Batch

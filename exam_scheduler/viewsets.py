@@ -1,8 +1,8 @@
 from exam_scheduler.models import (Department, Program, Course, Batch, Faculty, Exam, Room, TimeSlot,
-                                   CourseOffered, CreateRoutine, Routine)
+                                   CourseOffered, CreateRoutine, Routine, Section)
 from .serializers import (UserSerializer, UserMiniSerializer, GroupSerializer, DepartmentSerializer,
                           DepartmentMiniSerializer, ProgramSerializer, ProgramMiniSerializer, CourseSerializer, CourseMiniSerializer,
-                          BatchSerializer, BatchMiniSerializer, FacultySerializer, FacultyMiniSerializer, ExamSerializer, ExamMiniSerializer,
+                          BatchSerializer, BatchMiniSerializer, SectionSerializer, FacultySerializer, FacultyMiniSerializer, ExamSerializer, ExamMiniSerializer,
                           RoomSerializer, RoomMiniSerializer, TimeSlotSerializer, TimeSlotMiniSerializer, CourseOfferedSerializer, CourseOfferedMiniSerializer,
                           CreateRoutineSerializer, CreateRoutineMiniSerializer, RoutineSerializer, RoutineMiniSerializer)
 
@@ -155,7 +155,7 @@ class CourseViewSet(viewsets.ModelViewSet):
     def retrieve(self, request,  *args, **kwargs):
         params = kwargs
         print(params['pk'])
-        courses = Course.objects.filter(programCode=params['pk'])
+        courses = Course.objects.filter(id=params['pk'])
         serializer = CourseMiniSerializer(courses, many=True)
         return Response(serializer.data)
 
@@ -191,9 +191,14 @@ class BatchViewSet(viewsets.ModelViewSet):
         params = kwargs
         print(params['pk'])
         # programs = Program.objects.all()
-        batches = Batch.objects.filter(programCode=params['pk'])
+        batches = Batch.objects.filter(id=params['pk'])
         serializer = BatchMiniSerializer(batches, many=True)
         return Response(serializer.data)
+
+
+class SectionViewSet(viewsets.ModelViewSet):
+    queryset = Section.objects.all()
+    serializer_class = SectionSerializer
 
 
 class FacultyFilter(filters.FilterSet):
@@ -227,7 +232,7 @@ class FacultyViewSet(viewsets.ModelViewSet):
     def retrieve(self, request,  *args, **kwargs):
         params = kwargs
         print(params['pk'])
-        faculties = Faculty.objects.filter(DepartmentID=params['pk'])
+        faculties = Faculty.objects.filter(id=params['pk'])
         serializer = FacultyMiniSerializer(faculties, many=True)
         return Response(serializer.data)
 
@@ -335,7 +340,7 @@ class CourseOfferedViewSet(viewsets.ModelViewSet):
         params = kwargs
         print(params['pk'])
         # programs = Program.objects.all()
-        coursesOffered = CourseOffered.objects.filter(batchName=params['pk'])
+        coursesOffered = CourseOffered.objects.filter(id=params['pk'])
         serializer = CourseOfferedMiniSerializer(coursesOffered, many=True)
         return Response(serializer.data)
 
