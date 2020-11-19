@@ -69,13 +69,6 @@ class DepartmentFilter(filters.FilterSet):
 class DepartmentViewSet(viewsets.ModelViewSet):
     queryset = Department.objects.all()
     serializer_class = DepartmentSerializer
-    filterset_class = DepartmentFilter
-    filter_backends = (django_filters.rest_framework.DjangoFilterBackend,)
-    __basic_fields = ('id', 'dpt_code', 'dpt_name')
-    filter_backends = (filters.DjangoFilterBackend,
-                       SearchFilter, OrderingFilter)
-    filter_fields = __basic_fields
-    search_fields = __basic_fields
 
     def list(self, request,  *args, **kwargs):
         departments = Department.objects.all()
@@ -83,24 +76,9 @@ class DepartmentViewSet(viewsets.ModelViewSet):
         return Response(serializer.data)
 
 
-class ProgramFilter(filters.FilterSet):
-
-    class Meta:
-        model = Program
-        fields = ('programCode', 'pro_name', 'pro_shortForm', 'DepartmentID')
-
-
 class ProgramViewSet(viewsets.ModelViewSet):
     queryset = Program.objects.all()
     serializer_class = ProgramSerializer
-    filterset_class = ProgramFilter
-    filter_backends = (django_filters.rest_framework.DjangoFilterBackend,)
-    __basic_fields = ('programCode', 'pro_name',
-                      'pro_shortForm', 'DepartmentID')
-    filter_backends = (filters.DjangoFilterBackend,
-                       SearchFilter, OrderingFilter)
-    filter_fields = ('programCode', 'DepartmentID')
-    search_fields = ('DepartmentID')
 
     def list(self, request,  *args, **kwargs):
         programs = Program.objects.all()
@@ -116,7 +94,7 @@ class ProgramViewSet(viewsets.ModelViewSet):
         params = kwargs
         print(params['pk'])
         # programs = Program.objects.all()
-        programs = Program.objects.filter(DepartmentID=params['pk'])
+        programs = Program.objects.filter(programCode=params['pk'])
         serializer = ProgramMiniSerializer(
             programs, many=True,  context={'request': request})
         return Response(serializer.data)
@@ -134,14 +112,6 @@ class CourseFilter(filters.FilterSet):
 class CourseViewSet(viewsets.ModelViewSet):
     queryset = Course.objects.all()
     serializer_class = CourseSerializer
-    filterset_class = CourseFilter
-    filter_backends = (django_filters.rest_framework.DjangoFilterBackend,)
-    __basic_fields = ('id', 'courseCode', 'crs_title',
-                      'crs_shortName', 'programCode')
-    filter_backends = (filters.DjangoFilterBackend,
-                       SearchFilter, OrderingFilter)
-    filter_fields = __basic_fields
-    search_fields = __basic_fields
 
     def list(self, request,  *args, **kwargs):
         courses = Course.objects.all()
@@ -170,13 +140,6 @@ class BatchFilter(filters.FilterSet):
 class BatchViewSet(viewsets.ModelViewSet):
     queryset = Batch.objects.all()
     serializer_class = BatchSerializer
-    filterset_class = BatchFilter
-    filter_backends = (django_filters.rest_framework.DjangoFilterBackend,)
-    __basic_fields = ('id', 'batchName', 'programCode')
-    filter_backends = (filters.DjangoFilterBackend,
-                       SearchFilter, OrderingFilter)
-    filter_fields = __basic_fields
-    search_fields = __basic_fields
 
     def list(self, request,  *args, **kwargs):
         batches = Batch.objects.all()
@@ -212,13 +175,6 @@ class FacultyFilter(filters.FilterSet):
 class FacultyViewSet(viewsets.ModelViewSet):
     queryset = Faculty.objects.all()
     serializer_class = FacultySerializer
-    filterset_class = FacultyFilter
-    filter_backends = (django_filters.rest_framework.DjangoFilterBackend,)
-    __basic_fields = ('fac_firstName', 'fac_lastName', 'fac_shortName')
-    filter_backends = (filters.DjangoFilterBackend,
-                       SearchFilter, OrderingFilter)
-    filter_fields = __basic_fields
-    search_fields = __basic_fields
 
     def list(self, request,  *args, **kwargs):
         faculty = Faculty.objects.all()
@@ -247,13 +203,6 @@ class ExamFilter(filters.FilterSet):
 class ExamViewSet(viewsets.ModelViewSet):
     queryset = Exam.objects.all()
     serializer_class = ExamSerializer
-    filterset_class = ExamFilter
-    filter_backends = (django_filters.rest_framework.DjangoFilterBackend,)
-    __basic_fields = ('id', 'exm_type', 'exm_term', 'exm_year')
-    filter_backends = (filters.DjangoFilterBackend,
-                       SearchFilter, OrderingFilter)
-    filter_fields = __basic_fields
-    search_fields = __basic_fields
 
     def list(self, request,  *args, **kwargs):
         exams = Exam.objects.all()
@@ -271,13 +220,6 @@ class RoomFilter(filters.FilterSet):
 class RoomViewSet(viewsets.ModelViewSet):
     queryset = Room.objects.all()
     serializer_class = RoomSerializer
-    filterset_class = RoomFilter
-    filter_backends = (django_filters.rest_framework.DjangoFilterBackend,)
-    __basic_fields = ('rom_capacity', 'roomCode', 'id')
-    filter_backends = (filters.DjangoFilterBackend,
-                       SearchFilter, OrderingFilter)
-    filter_fields = __basic_fields
-    search_fields = __basic_fields
 
     def list(self, request,  *args, **kwargs):
         rooms = Room.objects.all()
@@ -295,13 +237,6 @@ class TimeSlotFilter(filters.FilterSet):
 class TimeSlotViewSet(viewsets.ModelViewSet):
     queryset = TimeSlot.objects.all()
     serializer_class = TimeSlotSerializer
-    filterset_class = TimeSlotFilter
-    filter_backends = (django_filters.rest_framework.DjangoFilterBackend,)
-    __basic_fields = ('id', 'tst_day')
-    filter_backends = (filters.DjangoFilterBackend,
-                       SearchFilter, OrderingFilter)
-    filter_fields = __basic_fields
-    search_fields = __basic_fields
 
     def list(self, request,  *args, **kwargs):
         timeSlots = TimeSlot.objects.all()
@@ -319,13 +254,6 @@ class CourseOfferedFilter(filters.FilterSet):
 class CourseOfferedViewSet(viewsets.ModelViewSet):
     queryset = CourseOffered.objects.all()
     serializer_class = CourseOfferedSerializer
-    filterset_class = CourseOfferedFilter
-    filter_backends = (django_filters.rest_framework.DjangoFilterBackend,)
-    __basic_fields = ('Batch', 'Course', 'Faculty')
-    filter_backends = (filters.DjangoFilterBackend,
-                       SearchFilter, OrderingFilter)
-    filter_fields = __basic_fields
-    search_fields = __basic_fields
 
     def list(self, request,  *args, **kwargs):
         coursesOffered = CourseOffered.objects.all()
@@ -355,17 +283,7 @@ class CreateRoutineFilter(filters.FilterSet):
 class CreateRoutineViewSet(viewsets.ModelViewSet):
     queryset = CreateRoutine.objects.all()
     serializer_class = CreateRoutineSerializer
-    filterset_class = CreateRoutineFilter
-    filter_backends = (django_filters.rest_framework.DjangoFilterBackend,)
-    __basic_fields = ('dpt_code', 'roomCode')
-    filter_backends = (filters.DjangoFilterBackend, OrderingFilter)
-    filter_fields = __basic_fields
-    #search_fields = __basic_fields
-    #filter_backends = (filters.SearchFilter,)
-    #search_fields = ('Batch', 'Room')
 
-    #filterset_fields = ('Batch', 'Room')
-    #permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
     @action(methods=['get'], detail=False)
     def newest(self, request):
         newest = self.get_queryset().order_by('created').last()
@@ -388,17 +306,7 @@ class RoutineFilter(filters.FilterSet):
 class RoutineViewSet(viewsets.ModelViewSet):
     queryset = Routine.objects.all()
     serializer_class = RoutineSerializer
-    filterset_class = RoutineFilter
-    filter_backends = (django_filters.rest_framework.DjangoFilterBackend,)
-    __basic_fields = ('examID', 'roomCode')
-    filter_backends = (filters.DjangoFilterBackend, OrderingFilter)
-    filter_fields = __basic_fields
-    #search_fields = __basic_fields
-    #filter_backends = (filters.SearchFilter,)
-    #search_fields = ('Batch', 'Room')
 
-    #filterset_fields = ('Batch', 'Room')
-    #permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
     @action(methods=['get'], detail=False)
     def newest(self, request):
         newest = self.get_queryset().order_by('created').last()
@@ -409,15 +317,3 @@ class RoutineViewSet(viewsets.ModelViewSet):
         routines = Routine.objects.all()
         serializer = RoutineMiniSerializer(routines, many=True)
         return Response(serializer.data)
-
-    # def get_queryset(self):
-    # 	coursesOffered = CourseOffered.objects.all()
-    # 	return coursesOffered
-
-    # def retrieve(self, request,  *args, **kwargs):
-    # 	params=kwargs
-    # 	print(params['pk'])
-    # 	# programs = Program.objects.all()
-    # 	coursesOffered = CourseOffered.objects.filter(batchName = params['pk'])
-    # 	serializer = CourseOfferedMiniSerializer(coursesOffered, many=True)
-    # 	return Response(serializer.data)

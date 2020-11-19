@@ -288,6 +288,8 @@ class CourseOffered(models.Model):
     ofr_year = models.IntegerField(verbose_name='year')
     # courseCode = models.ForeignKey(
     #     'Course', default=None, on_delete=models.CASCADE, verbose_name='course', db_column="courseCode")
+    programID = models.ForeignKey(
+        'Program', default=None, on_delete=models.CASCADE, blank='true', null='true', verbose_name='program', db_column="programCode")
     courseID = models.ForeignKey(
         'Course', default=None, on_delete=models.CASCADE, blank='true', null='true', verbose_name='course', db_column="courseID")
     batchName = models.ForeignKey(
