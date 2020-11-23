@@ -152,16 +152,46 @@ class BatchViewSet(viewsets.ModelViewSet):
 
     def retrieve(self, request,  *args, **kwargs):
         params = kwargs
-        print(params['pk'])
+
         # programs = Program.objects.all()
-        batches = Batch.objects.filter(id=params['pk'])
+        # if params['pk']:
+        if (params['pk'] == "115"):
+            print('programCode', params['pk'])
+
+            batches = Batch.objects.filter(programCode=params['pk'])
+
+        elif (params['pk'] == "116"):
+            print('programCode', params['pk'])
+
+            batches = Batch.objects.filter(programCode=params['pk'])
+
+        else:
+            print(' batch id', params['pk'])
+
+            batches = Batch.objects.filter(id=params['pk'])
+
         serializer = BatchMiniSerializer(batches, many=True)
         return Response(serializer.data)
+
+
+class SectionFilter(filters.FilterSet):
+
+    class Meta:
+        model = Section
+        fields = ('id', 'sectionName', 'batchID')
 
 
 class SectionViewSet(viewsets.ModelViewSet):
     queryset = Section.objects.all()
     serializer_class = SectionSerializer
+
+    def retrieve(self, request,  *args, **kwargs):
+        params = kwargs
+        print('batchId for section..', params['pk'])
+        sections = Section.objects.filter(batchID=params['pk'])
+        serializer = SectionSerializer(sections, many=True)
+
+        return Response(serializer.data)
 
 
 class FacultyFilter(filters.FilterSet):
