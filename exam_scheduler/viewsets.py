@@ -187,8 +187,17 @@ class SectionViewSet(viewsets.ModelViewSet):
 
     def retrieve(self, request,  *args, **kwargs):
         params = kwargs
+
         print('batchId for section..', params['pk'])
-        sections = Section.objects.filter(batchID=params['pk'])
+        sp = params['pk'].split("t")
+        print(sp)
+        if(sp[0] == "b"):
+            batch = int(sp[1])
+            sections = Section.objects.filter(batchID=batch)
+        elif(sp[0] == "s"):
+            section = int(sp[1])
+            sections = Section.objects.filter(id=section)
+
         serializer = SectionSerializer(sections, many=True)
 
         return Response(serializer.data)
