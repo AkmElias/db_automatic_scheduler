@@ -124,8 +124,17 @@ class CourseViewSet(viewsets.ModelViewSet):
 
     def retrieve(self, request,  *args, **kwargs):
         params = kwargs
-        print(params['pk'])
-        courses = Course.objects.filter(id=params['pk'])
+        print('course program', params['pk'])
+
+        if (params['pk'] == "115"):
+                courses = Course.objects.filter(programCode=params['pk'])
+                print('course program', courses)
+        elif (params['pk'] == "116"):
+            courses = Course.objects.filter(programCode=params['pk'])
+
+        else:
+            courses = Course.objects.filter(id=params['pk'])
+
         serializer = CourseMiniSerializer(courses, many=True)
         return Response(serializer.data)
 
@@ -187,8 +196,6 @@ class SectionViewSet(viewsets.ModelViewSet):
 
     def retrieve(self, request,  *args, **kwargs):
         params = kwargs
-
-        print('batchId for section..', params['pk'])
         sp = params['pk'].split("t")
         print(sp)
         if(sp[0] == "b"):
