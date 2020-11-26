@@ -20,6 +20,7 @@ from django_filters import rest_framework as filters
 from rest_framework.filters import SearchFilter, OrderingFilter
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.permissions import IsAuthenticated
+from django.db.models import Q
 
 
 class UserFilter(filters.FilterSet):
@@ -124,11 +125,10 @@ class CourseViewSet(viewsets.ModelViewSet):
 
     def retrieve(self, request,  *args, **kwargs):
         params = kwargs
-        print('course program', params['pk'])
 
         if (params['pk'] == "115"):
-                courses = Course.objects.filter(programCode=params['pk'])
-                print('course program', courses)
+            courses = Course.objects.filter(programCode=params['pk'])
+
         elif (params['pk'] == "116"):
             courses = Course.objects.filter(programCode=params['pk'])
 
@@ -312,11 +312,24 @@ class CourseOfferedViewSet(viewsets.ModelViewSet):
 
     def retrieve(self, request,  *args, **kwargs):
         params = kwargs
-        print(params['pk'])
-        # programs = Program.objects.all()
-        coursesOffered = CourseOffered.objects.filter(id=params['pk'])
-        serializer = CourseOfferedMiniSerializer(coursesOffered, many=True)
-        return Response(serializer.data)
+        idOrBatchAndSection = params['pk'].split("t")
+        print('all...', idOrBatchAndSection)
+        if(idOrBatchAndSection[0] == 'b'):
+
+            print('batch and section ', idOrBatchAndSection[0], ' batchId..',
+                  idOrBatchAndSection[1], 'sectionId.. ', idOrBatchAndSection[2])
+            coursesOffered = CourseOffered.objects.filter(
+                Q(batchName=idOrBatchAndSection[1])
+                & Q(sectionName=idOrBatchAndSection[2])
+            )
+            serializer = CourseOfferedMiniSerializer(coursesOffered, many=True)
+            return Response(serializer.data)
+
+        else:
+            coursesOffered = CourseOffered.objects.filter(
+                id=idOrBatchAndSection[1])
+            serializer = CourseOfferedMiniSerializer(coursesOffered, many=True)
+            return Response(serializer.data)
 
 
 class CreateRoutineFilter(filters.FilterSet):

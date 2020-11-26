@@ -8,8 +8,8 @@ from exam_scheduler.viewsets import (UserViewSet, GroupViewSet, DepartmentViewSe
 # from exam_scheduler.views import ProgramAPIView
 # Routers provide an easy way of automatically determining the URL conf.
 router = routers.DefaultRouter()
-#router.register(r'users', views.UserViewSet)
-#router.register(r'groups', views.GroupViewSet)
+# router.register(r'users', views.UserViewSet)
+# router.register(r'groups', views.GroupViewSet)
 router.register(r'users', UserViewSet)
 router.register(r'groups', GroupViewSet)
 router.register(r'departments', DepartmentViewSet)
@@ -23,5 +23,7 @@ router.register(r'exams', ExamViewSet)
 router.register(r'rooms', RoomViewSet)
 router.register(r'timeSlots', TimeSlotViewSet)
 router.register(r'coursesOffered', CourseOfferedViewSet)
+router.register(r'coursesOffered/<int:batch>/<int:section>',
+                CourseOfferedViewSet)
 router.register(r'createRoutines', CreateRoutineViewSet)
 router.register(r'routines', RoutineViewSet, base_name='routine')
