@@ -41,7 +41,7 @@ class Program(models.Model):
     )
 
     pro_type = models.CharField(
-        default='honours', max_length=7, choices=TYPE_CHOICES, verbose_name='type')
+        default='honours', max_length=10, choices=TYPE_CHOICES, verbose_name='type')
 
     class Meta:
         db_table = 'tbl_program'

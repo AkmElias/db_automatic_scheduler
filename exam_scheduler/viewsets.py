@@ -107,7 +107,7 @@ class CourseFilter(filters.FilterSet):
 
     class Meta:
         model = Course
-        fields = ('courseCode', 'crs_title', 'crs_shortName', 'crs_category')
+        fields = ('id','courseCode', 'crs_title', 'crs_shortName', 'crs_category')
 
 
 class CourseViewSet(viewsets.ModelViewSet):
