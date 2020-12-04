@@ -1,6 +1,5 @@
 from django.db import models
 from django.contrib.auth.models import User
-from smart_selects.db_fields import ChainedForeignKey
 
 
 # Create your models here.

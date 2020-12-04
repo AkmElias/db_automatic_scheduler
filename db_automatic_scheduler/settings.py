@@ -46,12 +46,15 @@ INSTALLED_APPS = [
     # freamework & site packages,
     'django_filters',
     'rest_framework',
-    'import_export'
+    #'import_export'
 
 ]
 
+CORS_ORIGIN_ALLOW_ALL = True
+
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -93,9 +96,9 @@ WSGI_APPLICATION = 'db_automatic_scheduler.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'db_automatic_scheduler',
+        'NAME': 'automatic_scheduler',
         'USER': 'postgres',
-        'PASSWORD': 'password',
+        'PASSWORD': 'post',
         'HOST': '127.0.0.1',
         'PORT': '5432',
     }
