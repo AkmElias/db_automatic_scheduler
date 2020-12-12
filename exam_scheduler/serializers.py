@@ -156,7 +156,7 @@ class TimeSlotSerializer(serializers.ModelSerializer):
 class TimeSlotMiniSerializer(serializers.ModelSerializer):
     class Meta:
         model = TimeSlot
-        fields = ('id', 'tst_day', 'tst_duration', 'tst_type')
+        fields = ('id',)
 
 
 class CourseOfferedSerializer(serializers.ModelSerializer):
@@ -181,7 +181,7 @@ class CreateRoutineSerializer(serializers.ModelSerializer):
 class CreateRoutineMiniSerializer(serializers.ModelSerializer):
     class Meta:
         model = CreateRoutine
-        fields = ('examID', 'roomCode')
+        fields = ('__all__')
 
 
 class RoutineSerializer(serializers.ModelSerializer):
@@ -193,4 +193,4 @@ class RoutineSerializer(serializers.ModelSerializer):
 class RoutineMiniSerializer(serializers.ModelSerializer):
     class Meta:
         model = Routine
-        fields = ('examID', 'roomCode')
+        fields = ('__all__')

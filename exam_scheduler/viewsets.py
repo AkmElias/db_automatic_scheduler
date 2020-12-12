@@ -107,7 +107,8 @@ class CourseFilter(filters.FilterSet):
 
     class Meta:
         model = Course
-        fields = ('id','courseCode', 'crs_title', 'crs_shortName', 'crs_category')
+        fields = ('id', 'courseCode', 'crs_title',
+                  'crs_shortName', 'crs_category')
 
 
 class CourseViewSet(viewsets.ModelViewSet):
@@ -277,7 +278,7 @@ class TimeSlotFilter(filters.FilterSet):
 
     class Meta:
         model = TimeSlot
-        fields = ('id', 'tst_day')
+        fields = ('id',)
 
 
 class TimeSlotViewSet(viewsets.ModelViewSet):
@@ -359,7 +360,7 @@ class RoutineFilter(filters.FilterSet):
 
     class Meta:
         model = Routine
-        fields = ('examID', 'roomCode')
+        fields = ('__all__')
 
 
 class RoutineViewSet(viewsets.ModelViewSet):

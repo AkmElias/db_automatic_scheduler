@@ -1,6 +1,6 @@
 from django.contrib import admin
 from django.db import models
-from .models import Department, Program, Course, Batch, Section, CourseOffered, Faculty, Exam, Room, TimeSlot, CreateRoutine, Routine
+from .models import Department, Program, Course, Batch, Section, CourseOffered, Faculty, Exam, Room, TimeSlot, Routine, Day
 
 
 admin.site.register(Department)
@@ -13,5 +13,5 @@ admin.site.register(CourseOffered)
 admin.site.register(Exam)
 admin.site.register(Room)
 admin.site.register(TimeSlot)
-admin.site.register(CreateRoutine)
 admin.site.register(Routine)
+admin.site.register(Day)

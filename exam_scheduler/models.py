@@ -233,31 +233,10 @@ class TimeSlot(models.Model):
     id = models.AutoField(
         default=None, max_length=20, primary_key=True, verbose_name='timeSlot ID')
 
-    DAYS_OF_WEEK = (
-        ('Sun', 'Sunday'),
-        ('Mon', 'Monday'),
-        ('Tue', 'Tuesday'),
-        ('Wed', 'Wednesday'),
-        ('Thu', 'Thursday'),
-        ('Fri', 'Friday'),
-        ('Sat', 'Saturday'),
-    )
-
-    # my_field = MultiSelectField(choices=MY_CHOICES)
-    tst_day = models.CharField(default=None, blank=True, null=True,
-                               max_length=9, choices=DAYS_OF_WEEK, verbose_name='day')
-    tst_duration = models.CharField(
-        default='10:00AM-12:00PM', max_length=15, verbose_name='duration')
-
-    TYPE_CHOICES = (
-        ('Classroom', 'Classroom'),
-        ('Final', 'Final'),
-        ('Mid Term', 'Mid Term'),
-        ('Supplymentary', 'Supplymentary'),
-    )
-
-    tst_type = models.CharField(
-        max_length=13, choices=TYPE_CHOICES, verbose_name='type')
+    startingTime = models.CharField(
+        default=None, max_length=20, verbose_name='start', blank=False, null=False)
+    endingTime = models.CharField(
+        default=None, max_length=20, verbose_name='start', blank=False, null=False)
 
     class Meta:
         db_table = 'tbl_timeSlot'
@@ -267,7 +246,20 @@ class TimeSlot(models.Model):
     # 	return self.tst_duration
 
     def __str__(self):
-        return '%s %s' % (self.tst_day, self.tst_duration)
+        return '%s %s %s' % (self.startingTime, ' to ', self.endingTime)
+
+
+class Day(models.Model):
+    id = models.AutoField(default=None, primary_key=True)
+    dayName = models.CharField(
+        default=None, max_length=10, blank=False, null=False)
+
+    class Meta:
+        db_table = 'tbl_day'
+        verbose_name_plural = 'Day'
+
+    def __str__(self):
+        return self.dayName
 
 
 class CourseOffered(models.Model):
@@ -341,14 +333,42 @@ class Routine(models.Model):
     # routineID
     id = models.AutoField(
         default=None, max_length=20, primary_key=True, verbose_name='routine ID')
-    courseOfferedID = models.ForeignKey(
-        'CourseOffered', default=None, on_delete=models.CASCADE, verbose_name='CourseOffered', db_column="courseOfferedID")
-    roomCode = models.ForeignKey(
-        'Room', default=None, on_delete=models.CASCADE, verbose_name='room', db_column="roomCode")
-    examID = models.ForeignKey(
-        'Exam', default=None, on_delete=models.CASCADE, verbose_name='exam', db_column="examID")
-    timeSlotID = models.ForeignKey(
-        'TimeSlot', default=None, on_delete=models.CASCADE, verbose_name='timeSlot', db_column="timeSlotID")
+    TERM_CHOICES = (
+        ('Spring', 'Spring'),
+        ('Summer', 'Summer'),
+        ('Autumn', 'Autumn'),
+    )
+
+    term = models.CharField(
+        max_length=6, default=None, choices=TERM_CHOICES, verbose_name='terms')
+    year = models.IntegerField(
+        verbose_name='year', default=None, blank=False, null=False)
+    day_choice = (
+        ('Saturday', 'Saturday'),
+        ('Sunday', 'Sunday'),
+        ('Monday', 'Monday'),
+        ('Tuesday', 'Tuesday'),
+        ('Wednesday', 'Wednesday'),
+        ('Thursday', 'Thursday'),
+    )
+    day = models.CharField(
+        max_length=12, default=None, choices=day_choice, verbose_name='days')
+    # multiple start.... to end....loop until a day of routine create finish..
+    program = models.ForeignKey(
+        'Program', default=None, verbose_name='programs', on_delete=models.PROTECT, db_column="programCode")
+    # batch and section select individually to get the offered courses but save batch and section as one field
+    batchAndSection = models.CharField(
+        max_length=8, default=None, blank=False, null=False)
+    timeSlot = models.ForeignKey(
+        'TimeSlot', default=None, on_delete=models.PROTECT, verbose_name='timeSlot', db_column="timeSlot")
+    # get courseName and faculty id after selecting the
+    courseName = models.CharField(
+        max_length=40, default=None, blank=False, null=False)
+    faculty = models.ForeignKey(
+        'Faculty', verbose_name='faculties', default=None, on_delete=models.PROTECT, db_column='faculty')
+
+    room = models.ForeignKey(
+        'Room', default=None, on_delete=models.PROTECT, verbose_name='room', db_column="roomCode")
 
     class Meta:
         db_table = '"tbl_routine"'
