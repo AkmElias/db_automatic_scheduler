@@ -11,65 +11,29 @@ class Migration(migrations.Migration):
     ]
 
     operations = [
-        migrations.RemoveField(
-            model_name='routine',
-            name='courseOfferedID',
-        ),
-        migrations.RemoveField(
-            model_name='routine',
-            name='examID',
-        ),
-        migrations.RemoveField(
-            model_name='routine',
-            name='roomCode',
-        ),
-        migrations.RemoveField(
-            model_name='routine',
-            name='timeSlotID',
-        ),
-        migrations.AddField(
-            model_name='routine',
-            name='batchAndSection',
-            field=models.CharField(default=None, max_length=8),
-        ),
-        migrations.AddField(
-            model_name='routine',
-            name='courseName',
-            field=models.CharField(default=None, max_length=40),
-        ),
-        migrations.AddField(
-            model_name='routine',
-            name='day',
-            field=models.CharField(choices=[('Saturday', 'Saturday'), ('Sunday', 'Sunday'), ('Monday', 'Monday'), ('Tuesday', 'Tuesday'), ('Wednesday', 'Wednesday'), ('Thursday', 'Thursday')], default=None, max_length=12, verbose_name='days'),
-        ),
-        migrations.AddField(
-            model_name='routine',
-            name='faculty',
-            field=models.ForeignKey(db_column='faculty', default=None, on_delete=django.db.models.deletion.PROTECT, to='exam_scheduler.Faculty', verbose_name='faculties'),
-        ),
-        migrations.AddField(
-            model_name='routine',
-            name='program',
-            field=models.ForeignKey(db_column='programCode', default=None, on_delete=django.db.models.deletion.PROTECT, to='exam_scheduler.Program', verbose_name='programs'),
-        ),
-        migrations.AddField(
-            model_name='routine',
-            name='room',
-            field=models.ForeignKey(db_column='roomCode', default=None, on_delete=django.db.models.deletion.PROTECT, to='exam_scheduler.Room', verbose_name='room'),
-        ),
-        migrations.AddField(
-            model_name='routine',
-            name='term',
-            field=models.CharField(choices=[('Spring', 'Spring'), ('Summer', 'Summer'), ('Autumn', 'Autumn')], default=None, max_length=6, verbose_name='terms'),
-        ),
-        migrations.AddField(
-            model_name='routine',
-            name='timeSlot',
-            field=models.ForeignKey(db_column='timeSlot', default=None, on_delete=django.db.models.deletion.PROTECT, to='exam_scheduler.TimeSlot', verbose_name='timeSlot'),
-        ),
-        migrations.AddField(
-            model_name='routine',
-            name='year',
-            field=models.IntegerField(default=None, verbose_name='year'),
-        ),
+
+
+        migrations.CreateModel(
+            name='Routine',
+            fields=[
+                ('id', models.AutoField(default=None, max_length=20,
+                                        primary_key=True, serialize=False, verbose_name='routine ID')),
+                ('title', models.CharField(default=None,
+                                           max_length=250, verbose_name='title')),
+                ('batchAndSection', models.CharField(default=None, max_length=20)),
+                ('courseName', models.CharField(default=None, max_length=20)),
+                ('faculty', models.CharField(default=None,
+                                             max_length=20, verbose_name='faculties')),
+                ('room', models.CharField(default=None,
+                                          max_length=20, verbose_name='room')),
+                ('timeSlot', models.CharField(default=None,
+                                              max_length=20, verbose_name='timeSlot')),
+            ],
+            options={
+                'verbose_name': 'Routine',
+                'verbose_name_plural': 'Routine',
+                'db_table': '"tbl_routine"',
+            },
+        )
+
     ]

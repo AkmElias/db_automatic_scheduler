@@ -333,44 +333,27 @@ class Routine(models.Model):
     # routineID
     id = models.AutoField(
         default=None, max_length=20, primary_key=True, verbose_name='routine ID')
-    TERM_CHOICES = (
-        ('Spring', 'Spring'),
-        ('Summer', 'Summer'),
-        ('Autumn', 'Autumn'),
-    )
-
-    term = models.CharField(
-        max_length=6, default=None, choices=TERM_CHOICES, verbose_name='terms')
-    year = models.IntegerField(
-        verbose_name='year', default=None, blank=False, null=False)
-    day_choice = (
-        ('Saturday', 'Saturday'),
-        ('Sunday', 'Sunday'),
-        ('Monday', 'Monday'),
-        ('Tuesday', 'Tuesday'),
-        ('Wednesday', 'Wednesday'),
-        ('Thursday', 'Thursday'),
-    )
-    day = models.CharField(
-        max_length=12, default=None, choices=day_choice, verbose_name='days')
-    # multiple start.... to end....loop until a day of routine create finish..
-    program = models.ForeignKey(
-        'Program', default=None, verbose_name='programs', on_delete=models.PROTECT, db_column="programCode")
+    title = models.CharField(default=None, max_length=250,
+                             verbose_name='title', blank=False, null=False)
     # batch and section select individually to get the offered courses but save batch and section as one field
     batchAndSection = models.CharField(
-        max_length=8, default=None, blank=False, null=False)
-    timeSlot = models.ForeignKey(
-        'TimeSlot', default=None, on_delete=models.PROTECT, verbose_name='timeSlot', db_column="timeSlot")
+        max_length=20, default=None, blank=False, null=False)
+    timeSlot = models.CharField(
+        default=None, max_length=20, verbose_name='timeSlot')
     # get courseName and faculty id after selecting the
     courseName = models.CharField(
-        max_length=40, default=None, blank=False, null=False)
-    faculty = models.ForeignKey(
-        'Faculty', verbose_name='faculties', default=None, on_delete=models.PROTECT, db_column='faculty')
+        max_length=20, default=None, blank=False, null=False)
+    faculty = models.CharField(
+        max_length=20, blank=False, null=False, verbose_name='faculties', default=None)
 
-    room = models.ForeignKey(
-        'Room', default=None, on_delete=models.PROTECT, verbose_name='room', db_column="roomCode")
+    room = models.CharField(
+        default=None, max_length=20, blank=False, null=False, verbose_name='room')
 
     class Meta:
         db_table = '"tbl_routine"'
         verbose_name = "Routine"
         verbose_name_plural = "Routine"
+
+    def __str__(self):
+        return '%s %s %s' % (self.day, self.term, self.year)
+        # return self.ofr_term
