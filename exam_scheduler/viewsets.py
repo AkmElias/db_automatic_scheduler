@@ -367,13 +367,16 @@ class RoutineViewSet(viewsets.ModelViewSet):
     queryset = Routine.objects.all()
     serializer_class = RoutineSerializer
 
-    @action(methods=['get'], detail=False)
-    def newest(self, request):
-        newest = self.get_queryset().order_by('created').last()
-        serializer = self.get_serializer_class()(newest)
-        return Response(serializer.data)
-
     def list(self, request,  *args, **kwargs):
         routines = Routine.objects.all()
+        serializer = RoutineMiniSerializer(routines, many=True)
+        return Response(serializer.data)
+
+    def retrieve(self, request, *args, **kwargs):
+        params = kwargs
+        print('typ..', kwargs)
+        routines = Routine.objects.filter(
+            title__icontains=params['pk']
+        )
         serializer = RoutineMiniSerializer(routines, many=True)
         return Response(serializer.data)
