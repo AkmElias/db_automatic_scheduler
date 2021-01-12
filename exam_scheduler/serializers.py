@@ -8,12 +8,6 @@ from rest_framework.permissions import IsAuthenticated
 # Serializers define the API representation.
 
 
-class UserSerializer(serializers.HyperlinkedModelSerializer):
-    class Meta:
-        model = User
-        fields = ('id', 'url', 'username', 'groups', 'email', 'password')
-
-
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User

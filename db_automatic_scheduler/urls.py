@@ -25,10 +25,13 @@ from django.contrib.auth import views as auth_views
 from django.conf import settings
 from django.conf.urls.static import static
 from rest_framework.authtoken.views import ObtainAuthToken
+from django.views.decorators.csrf import csrf_exempt
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path(r'', include(router.urls)),
+    path(r'auth/', csrf_exempt(ObtainAuthToken.as_view())),
     path('', include('exam_scheduler.urls')),
     path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
 
