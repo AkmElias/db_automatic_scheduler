@@ -81,7 +81,7 @@ class CourseMiniSerializer(serializers.ModelSerializer):
     class Meta:
         model = Course
         fields = ('id', 'crs_title', 'courseCode',
-                  'crs_shortName', 'crs_category', 'programCode')
+                  'crs_shortName', 'crs_category', 'programCode','crs_credit')
 
 
 class BatchSerializer(serializers.ModelSerializer):

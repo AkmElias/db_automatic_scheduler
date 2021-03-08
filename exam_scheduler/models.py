@@ -70,6 +70,10 @@ class Course(models.Model):
 
     crs_category = models.CharField(
         max_length=25, choices=CATEGORY_CHOICES, verbose_name='category')
+    
+    crs_credit = models.FloatField(
+        blank=True, null=True, verbose_name='credit')
+        
     programCode = models.ForeignKey(
         'Program', on_delete=models.CASCADE, verbose_name='program', db_column="programCode")
 
@@ -335,6 +339,9 @@ class Routine(models.Model):
         default=None, max_length=20, primary_key=True, verbose_name='routine ID')
     title = models.CharField(default=None, max_length=250,
                              verbose_name='title', blank=False, null=False)
+    
+    day = models.CharField(default=None, blank=True, null=True, max_length=12)
+
     # batch and section select individually to get the offered courses but save batch and section as one field
     batchAndSection = models.CharField(
         max_length=20, default=None, blank=False, null=False)
@@ -343,6 +350,8 @@ class Routine(models.Model):
     # get courseName and faculty id after selecting the
     courseName = models.CharField(
         max_length=20, default=None, blank=False, null=False)
+    courseTitle = models.CharField(max_length=60,default=None,blank=True, null=True)
+    facultyFullName = models.CharField(max_length=60,default=None,blank=True, null=True)
     faculty = models.CharField(
         max_length=20, blank=False, null=False, verbose_name='faculties', default=None)
 
@@ -354,6 +363,6 @@ class Routine(models.Model):
         verbose_name = "Routine"
         verbose_name_plural = "Routine"
 
-    def __str__(self):
-        return '%s %s %s' % (self.day, self.term, self.year)
+    # def __str__(self):
+    #     return '%s %s %s' % (self.day, self.term, self.year)
         # return self.ofr_term
