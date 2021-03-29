@@ -5,8 +5,6 @@ from .models import (Department, Program, Course, Batch, Section, Faculty, Exam,
 from django_filters import rest_framework as filters
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.permissions import IsAuthenticated
-from django.core.mail import send_mail  
-from verify_email.email_handler import send_verification_email
 # Serializers define the API representation.
 
 
@@ -18,8 +16,6 @@ class UserSerializer(serializers.ModelSerializer):
 
     def create(self, validated_data):
         user = User.objects.create_user(**validated_data)
-        send_mail('Verify email','Verify your email for Automatic scheduler by clicking the below link.','akmelias11@gmail.com', 
-            [user.email],  fail_silently=False,)
         return user
         authentication_classes = (TokenAuthentication,)
         permission_classes = (TokenAuthentication,)
