@@ -44,7 +44,9 @@ INSTALLED_APPS = [
     # freamework & site packages,
     'django_filters',
     'rest_framework',
-    'rest_framework.authtoken'
+    'rest_framework.authtoken',
+    'django_rest_passwordreset',
+    'verify_email'
     # 'import_export'
 
 ]
@@ -97,7 +99,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'automatic_scheduler',
         'USER': 'postgres',
-        'PASSWORD': 'post',
+        'PASSWORD': 'password',
         'HOST': '127.0.0.1',
         'PORT': '5432',
     }
@@ -164,3 +166,14 @@ REST_FRAMEWORK = {
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
 STATIC_URL = '/static/'
+
+
+# EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
+# Email
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.sendgrid.net'
+EMAIL_HOST_USER = 'apikey' # this is exactly the value 'apikey'
+EMAIL_HOST_PASSWORD = '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'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True

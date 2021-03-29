@@ -26,4 +26,4 @@ router.register(r'coursesOffered', CourseOfferedViewSet)
 router.register(r'coursesOffered/<int:batch>/<int:section>',
                 CourseOfferedViewSet)
 router.register(r'createRoutines', CreateRoutineViewSet)
-router.register(r'routines', RoutineViewSet, base_name='routine')
+router.register(r'routines', RoutineViewSet)

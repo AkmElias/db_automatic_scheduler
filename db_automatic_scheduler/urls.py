@@ -26,7 +26,7 @@ from django.conf import settings
 from django.conf.urls.static import static
 from rest_framework.authtoken.views import ObtainAuthToken
 from django.views.decorators.csrf import csrf_exempt
-
+import requests
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -34,7 +34,7 @@ urlpatterns = [
     path(r'auth/', csrf_exempt(ObtainAuthToken.as_view())),
     path('', include('exam_scheduler.urls')),
     path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
-
+    path('verification/', include('verify_email.urls')),
     path('admin/password_reset/', auth_views.PasswordResetView.as_view(),
          name='admin_password_reset',),
     path('admin/password_reset/done/',
@@ -42,6 +42,7 @@ urlpatterns = [
     path('reset/<uidb64>/<token>/', auth_views.PasswordResetConfirmView.as_view(),
          name='password_reset_confirm',),
     path('reset/done/', auth_views.PasswordResetCompleteView.as_view(),
-         name='password_reset_complete',)
+         name='password_reset_complete',),
+    path('api/password_reset/', include('django_rest_passwordreset.urls', namespace='password_reset')),
 
 ]

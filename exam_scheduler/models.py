@@ -1,8 +1,30 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.dispatch import receiver
+from django.urls import reverse
+from django_rest_passwordreset.signals import reset_password_token_created
+from django.core.mail import send_mail  
+from verify_email.email_handler import send_verification_email
+
+# from django_rest_resetpassword.signals import reset_password_token_created
 
 
-# Create your models here.
+
+@receiver(reset_password_token_created)
+def password_reset_token_created(sender, instance, reset_password_token, *args, **kwargs):
+
+    email_plaintext_message = "{}?token={}".format(reverse('password_reset:reset-password-request'), reset_password_token.key)
+    print("sdsd ", email_plaintext_message)
+    send_mail(
+        # title:
+        "Password Reset for {title}".format(title="Autometic scheduler"),
+        # message:
+        email_plaintext_message,
+        # from:
+        "akmelias11@gmail.com",
+        # to:
+        [reset_password_token.user.email]
+    )
 
 class Department(models.Model):
     # DepartmentID
